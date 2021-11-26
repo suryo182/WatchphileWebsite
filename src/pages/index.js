@@ -9,12 +9,11 @@ import intro_video from "../images/intro_video.png"
 import think_icon from "../images/think_icon.png" 
 import movie_icon from "../images/movie_icon.png" 
 import point_icon from "../images/point_icon.png" 
+import watchphile_text_icon from "../images/watchphile_text_image.png"
 
 
 function writeUserData(email) {
   console.log("writeUserData", email)
-
-
 }
 
 function handleClick(e) {
@@ -45,7 +44,7 @@ export default function Home() {
   <div className="container mx-auto flex flex-wrap p-2 pt-4 ml-7 flex-col md:flex-row items-center">
     <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
     <img className="lg:w-1/6 md:w-2/6 w-3/6" alt="Watchphile Icon" src={header_icon}/>
-    <span className="ml-2 text-2xl font-normal text-pink-700">Watchphile</span>
+    <img className="lg:w-1/6 md:w-2/6 w-3/6" alt="Watchphile Text Image" src={watchphile_text_icon}/>
     </a>
    </div>
 </header> 
