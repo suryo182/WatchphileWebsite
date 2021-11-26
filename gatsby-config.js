@@ -6,6 +6,10 @@
 
 module.exports = {
   /* Your site config here */
-  plugins: [`gatsby-plugin-postcss`
+  siteMetadata: {
+    title: 'Watchphile',
+    siteUrl: 'https://www.watchphile.co',
+  },
+  plugins: [`gatsby-plugin-postcss`,{resolve: `gatsby-plugin-sitemap`}
 ],
 }
