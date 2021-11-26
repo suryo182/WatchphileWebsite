@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-starter-hello-world",
+  "name": "Watchphile",
   "private": true,
-  "description": "A simplified bare-bones starter for Gatsby",
+  "description": "Find your next movies/tv shows. Tailored for you. Within minute",
   "version": "0.1.0",
   "license": "0BSD",
   "scripts": {
@@ -14,9 +14,12 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
+    "firebase": "^9.5.0",
     "gatsby": "^4.2.0",
+    "gatsby-plugin-postcss": "^5.2.0",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "tailwindcss": "^2.2.19"
   },
   "devDependencies": {
     "prettier": "^2.4.1"
