@@ -1,20 +1,17 @@
 import React from "react"
 import {getDbModuleAndDb} from "../utils/firebase"
 import "../styles/site.css"
+import { Helmet } from "react-helmet"
 
-import header_icon from "../images/header_icon.png" 
 import banner_image from "../images/banner_image.png" 
-
+import header_image from "../images/header_image.png" 
 import intro_video from "../images/intro_video.png" 
 import think_icon from "../images/think_icon.png" 
 import movie_icon from "../images/movie_icon.png" 
 import point_icon from "../images/point_icon.png" 
-import watchphile_text_icon from "../images/watchphile_text_image.png"
-
-
-function writeUserData(email) {
-  console.log("writeUserData", email)
-}
+import favicon16 from "../images/favicon_small.png";
+import favicon32 from "../images/favicon_medium.png";
+import favicon64 from "../images/favicon_big.png";
 
 function handleClick(e) {
   e.preventDefault();
@@ -28,23 +25,42 @@ function handleClick(e) {
     dbModule.push(dbModule.ref(db, '/waitlist'), {
       email: email
     }).then(snapshot => {
-      console.log("succed")
+      console.log("succeed")
     }).catch((error) => {
-      console.log("hata",error);
+      console.log("error",error);
     });
   })  
 }
 
 export default function Home() {
- 
+
   return (
 <div>
+<div className="application">
+      <Helmet
+        title={"Watchphile"}
+        meta={[
+        {
+         name: "description",
+         content: "Watchphile - Find your next movies/tv shows. Tailored for you. Within minute!",
+        },
+        {
+        name: "keywords",
+        content: "watchphile, movies, tv shows",
+        },
+      ]}
+      link={[
+      { rel: "icon", type: "image/png", sizes: "16x16", href: `${favicon16}` },
+      { rel: "icon", type: "image/png", sizes: "32x32", href: `${favicon32}` },
+      { rel: "shortcut icon", type: "image/png", href: `${favicon64}` },
+       ]}
+      />
+      </div>
 
 <header className="sticky top-0 text-gray-600 body-font bg-black filter drop-shadow">
   <div className="container mx-auto flex flex-wrap p-2 pt-4 ml-7 flex-col md:flex-row items-center">
     <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-    <img className="lg:w-1/6 md:w-2/6 w-3/6" alt="Watchphile Icon" src={header_icon}/>
-    <img className="lg:w-1/6 md:w-2/6 w-3/6" alt="Watchphile Text Image" src={watchphile_text_icon}/>
+    <img className="lg:w-1/6 md:w-2/6 w-1/6" alt="Watchphile Icon" src={header_image}/>
     </a>
    </div>
 </header> 
@@ -61,7 +77,7 @@ these people nearly spend <span className="font-bold text-white">152 hours</span
         <div className="relative mr-4 lg:w-full xl:w-1/2 w-2/4 md:w-full text-left">
           <input id="email_input" type="email" placeholder="Email me when it’s ready!" name="hero-field" className="w-full bg-grey-900 rounded focus:ring-2 focus:ring-green-600 focus:bg-transparent border border-green-600 focus:border-green-600 text-base outline-none text-white font-thin py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
         </div>
-        <button id="email_submit" onClick={handleClick} className="inline-flex text-black font-light bg-green-600 border-0 py-2 px-6 focus:outline-none active:bg-red-600 rounded text-lg">JOIN WAITLIST</button>
+        <button id="email_submit" onClick={handleClick} className="inline-flex text-black font-light bg-green-600 border-0 py-2 px-6 focus:outline-none active:bg-green-200 rounded text-lg">JOIN WAITLIST</button>
       </div>
     </div>
   </div>
