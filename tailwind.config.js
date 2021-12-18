@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         pink: {
+          200: '#F6C3C2',
           700: '#E79D9C'
         },
         green: {
@@ -13,8 +14,8 @@ module.exports = {
           600: '#39E83E'
         },
         grey: {
-          700: '#CFCFCF',
-          600: '#C4C4C4',
+          600: '#CFCFCF',
+          700: '#C4C4C4',
           900: '#424242' 
         }
       }
