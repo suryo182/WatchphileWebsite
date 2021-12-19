@@ -1,5 +1,6 @@
 let dbModule
 let db
+let analytics
 
 export function getDbModuleAndDb()  {
 
@@ -27,7 +28,7 @@ const lazyAnalytic = import('firebase/analytics')
   
       firebase.initializeApp(config)
 
-      _analytic.getAnalytics()
+      analytics = _analytic.getAnalytics()
     
       db = _dbModule.getDatabase()
 
