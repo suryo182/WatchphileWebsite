@@ -1,11 +1,8 @@
 import React from "react"
-// import {getDbModuleAndDb} from "../utils/firebase"
+import {getDbModuleAndDb} from "../utils/firebase"
 import "../styles/site.css"
 import { Helmet } from "react-helmet"
 
-import banner_image from "../images/banner_image.png"
-import header_image from "../images/header_image.png"
-import intro_video from "../images/intro_video.png"
 import think_icon from "../images/think_icon.png"
 import movie_icon from "../images/movie_icon.png"
 import point_icon from "../images/point_icon.png"
@@ -16,7 +13,6 @@ import favicon64 from "../images/favicon_big.png";
 import watchphile_text_image from "../images/watchphile_text.png"
 import watchphile_image from "../images/watchphile_image.png"
 import review_banner from "../images/review_banner.png"
-import explanation_banner from "../images/explanation_banner.png"
 import for_you_banner from "../images/for_you_banner.png"
 import check_icon from "../images/check_icon.png"
 import reviews_icon from "../images/reviews_icon.png"
@@ -32,7 +28,7 @@ import watchphile_video from "../assets/watchphile_video.mp4"
 function handleClick(e) {
     e.preventDefault();
 
-    /* const emailInput = document.getElementById("email_input");
+     const emailInput = document.getElementById("email_input");
      const email = emailInput.value;
 
      emailInput.value = '';
@@ -45,21 +41,27 @@ function handleClick(e) {
        }).catch((error) => {
          console.log("error",error);
        });
-     })  */
+     }) 
 }
 
 //export default function Home() {
 
 
 export default class HomePage extends React.Component {
+    
     constructor(props) {
         super(props);
 
-        /* getDbModuleAndDb().then(([dbModule, db]) => {
-           console.log("constructor ready");
-         });
-     */
+        console.log("constructor ready");
     }
+
+    componentDidMount(){
+        console.log("componentDidMount");
+
+        getDbModuleAndDb().then(([dbModule, db]) => {
+           console.log("componentDidMount in callback");
+         })
+      }
 
     render() {
         return (
