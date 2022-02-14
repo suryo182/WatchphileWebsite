@@ -13,6 +13,13 @@ module.exports = {
   plugins: [
     `gatsby-plugin-postcss`,
     `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-source-ghost`,
+      options: {
+        apiUrl: `http://3.229.153.93`,
+        contentApiKey: `6bc575c4927ff67999516fb28f`
+      }
+    },
     { resolve: `gatsby-plugin-sitemap` },
     {
       resolve: `gatsby-plugin-manifest`,

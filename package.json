@@ -21,10 +21,25 @@
     "gatsby-plugin-react-helmet": "^5.2.0",
     "gatsby-plugin-sitemap": "^5.2.0",
     "gatsby-source-ghost": "^4.2.4",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
-    "tailwindcss": "^2.2.19"
+    "tailwindcss": "^2.2.19",
+    "@tryghost/helpers": "^1.1.56",
+    "@tryghost/helpers-gatsby": "^1.0.62",
+    "cheerio": "1.0.0-rc.10",
+    "gatsby-awesome-pagination": "0.3.8",
+    "gatsby-image": "3.11.0",
+    "gatsby-plugin-advanced-sitemap": "^2.0.0",
+    "gatsby-plugin-catch-links": "3.12.0",
+    "gatsby-plugin-feed": "3.12.0",
+    "gatsby-plugin-force-trailing-slashes": "1.0.5",
+    "gatsby-plugin-offline": "4.12.0",
+    "gatsby-plugin-sharp": "3.12.0",
+    "gatsby-source-filesystem": "3.12.0",
+    "gatsby-transformer-sharp": "3.12.0",
+    "lodash": "4.17.21",
+    "react-scripts": "4.0.3"
   },
   "devDependencies": {
     "prettier": "^2.4.1"
