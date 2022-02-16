@@ -65,6 +65,7 @@ exports.createPages = async ({ graphql, actions }) => {
     const pageTemplate = path.resolve(`./src/templates/page.js`)
     const postTemplate = path.resolve(`./src/templates/post.js`)
 
+   /* 
     // Create tag pages
     tags.forEach(({ node }) => {
         const totalPosts = node.postCount !== null ? node.postCount : 0
@@ -86,7 +87,7 @@ exports.createPages = async ({ graphql, actions }) => {
                 slug: node.slug
             }
         })
-    })
+    })*/
 
     // Create author pages
     authors.forEach(({ node }) => {
@@ -115,6 +116,7 @@ exports.createPages = async ({ graphql, actions }) => {
     pages.forEach(({ node }) => {
         // This part here defines, that our pages will use
         // a `/:slug/` permalink.
+        
         node.url = `/${node.slug}/`
 
         createPage({
@@ -135,7 +137,7 @@ exports.createPages = async ({ graphql, actions }) => {
         node.url = `/${node.slug}/`
 
         createPage({
-            path: node.url,
+            path: `/${node.slug}/`,
             component: postTemplate,
             context: {
                 // Data passed to context is available
@@ -153,9 +155,9 @@ exports.createPages = async ({ graphql, actions }) => {
         component: indexTemplate,
         pathPrefix: ({ pageNumber }) => {
             if (pageNumber === 0) {
-                return `/`
+                return `/blog`
             } else {
-                return `/page`
+                return `/blog/page`
             }
         },
     })
