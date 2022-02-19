@@ -19,7 +19,7 @@ module.exports = {
   coverImage: "",
   logo: "",
   lang: "en",
-  siteUrl: "http://localhost:8000",
+  siteUrl: "",
   facebook: "https://www.facebook.com/ghost",
   twitter: "https://twitter.com/tryghost",
   showSubscribe: true,
