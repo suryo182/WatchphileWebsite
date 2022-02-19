@@ -1,25 +1,10 @@
 import { lighten } from "polished"
 import React from "react"
 import styled from "@emotion/styled"
-import RehypeReact from "rehype-react"
-
 import { colors } from "../styles/colors"
-
-const renderAst = new RehypeReact({
-  createElement: React.createElement,
-  components: {},
-}).Compiler
-
-// const Ast = ({ ast, ...props }) => {
-//   console.log(props, '<<< PROPS')
-//   console.log(ast, '<<< AST')
-//   ast.properties = props;
-//   return renderAst(ast);
-// };
 
 const PostContent = ({ html }) => (
   <PostFullContent className="post-full-content">
-    {/* <Ast className="post-content" ast={html} /> */}
     <div className="post-content" dangerouslySetInnerHTML={{ __html: html }} />
   </PostFullContent>
 )

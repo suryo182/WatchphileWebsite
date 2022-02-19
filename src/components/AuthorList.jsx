@@ -2,7 +2,6 @@ import React from 'react';
 
 import styled from '@emotion/styled';
 
-import { Author } from '../templates/post';
 import { AuthorListItem } from './AuthorListItem';
 
 

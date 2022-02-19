@@ -1,6 +1,5 @@
 import { format } from "date-fns"
 import { graphql, Link } from "gatsby"
-import { GatsbyImage, getSrc, getImage } from "gatsby-plugin-image"
 import * as _ from "lodash"
 import { lighten, setLightness } from "polished"
 import React from "react"
@@ -23,14 +22,6 @@ import { AuthorList } from "../components/AuthorList"
 
 const PageTemplate = ({ data, pageContext, location }) => {
   const post = data.ghostPost
-
-  let width
-  let height
-
-  // if (post.image) {
-  //   width = getImage(post.image)?.width
-  //   height = getImage(post.image)?.height
-  // }
 
   const date = new Date(post.created_at)
   // 2018-08-20
@@ -100,12 +91,6 @@ const PageTemplate = ({ data, pageContext, location }) => {
             content={`@${config.twitter.split("https://twitter.com/")[1]}`}
           />
         )}
-        {width && (
-          <meta property="og:image:width" content={width?.toString()} />
-        )}
-        {height && (
-          <meta property="og:image:height" content={height?.toString()} />
-        )}
       </Helmet>
       <Wrapper css={PostTemplate}>
         <header className="site-header">
@@ -125,7 +110,7 @@ const PageTemplate = ({ data, pageContext, location }) => {
                     post.tags.length > 0 &&
                     config.showAllTags &&
                     post.tags.map((tag, idx) => (
-                      <React.Fragment key={tag}>
+                      <React.Fragment key={idx}>
                         {idx > 0 && <>, &nbsp;</>}
                         <Link to={`/tags/${_.kebabCase(tag.name)}/`}>
                           {tag.name}
@@ -149,9 +134,9 @@ const PageTemplate = ({ data, pageContext, location }) => {
                     <AuthorList authors={post.authors} tooltip="large" />
                     <section className="post-full-byline-meta">
                       <h4 className="author-name">
-                        {post.authors.map(author => (
+                        {post.authors.map((author, idx) => (
                           <Link
-                            key={author.name}
+                            key={idx}
                             to={`/author/${_.kebabCase(author.name)}/`}
                           >
                             {author.name}
@@ -234,11 +219,13 @@ const PostTemplate = css`
   }
 `
 
+// eslint-disable-next-line
 export const PostFull = css`
   position: relative;
   z-index: 50;
-`
+` 
 
+// eslint-disable-next-line
 export const NoImage = css`
   .post-full-content {
     padding-top: 0;
@@ -248,8 +235,9 @@ export const NoImage = css`
   .post-full-content:after {
     display: none;
   }
-`
+` 
 
+// eslint-disable-next-line
 export const PostFullHeader = styled.header`
   position: relative;
   margin: 0 auto;
@@ -269,7 +257,7 @@ export const PostFullHeader = styled.header`
   @media (max-width: 500px) {
     padding: 20px 0 35px;
   }
-`
+` 
 
 const PostFullTags = styled.section`
   display: flex;
@@ -368,6 +356,7 @@ const PostFullByline = styled.div`
   }
 `
 
+// eslint-disable-next-line
 export const PostFullTitle = styled.h1`
   margin: 0 0 0.2em;
   color: ${setLightness("0.05", colors.darkgrey)};

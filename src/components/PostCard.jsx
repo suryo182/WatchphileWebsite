@@ -35,7 +35,7 @@ export const PostCard = ({ post, large = false }) => {
             {post?.feature_image && (
               <img
                 src={post.feature_image}
-                alt={`${post.title} cover image`}
+                alt={`${post.title} cover`}
                 style={{ height: "100%" }}
               />
             )}
@@ -43,33 +43,31 @@ export const PostCard = ({ post, large = false }) => {
         </Link>
       )}
       <PostCardContent className="post-card-content">
-        <Link
-          className="post-card-content-link"
-          css={PostCardContentLink}
-          to={`/blog/${post.slug}`}
-        >
-          <PostCardHeader className="post-card-header">
-            {post.tags && config.showAllTags && (
-              <PostCardPrimaryTag className="post-card-primary-tag">
-                {post.tags.map((tag, idx) => (
-                  <React.Fragment key={tag}>
-                    {idx > 0 && <>, &nbsp;</>}
-                    <Link to={`/tags/${_.kebabCase(tag.name)}/`}>{tag.name}</Link>
-                  </React.Fragment>
-                ))}
-              </PostCardPrimaryTag>
-            )}
-            {post.tags && !config.showAllTags && (
-              <PostCardPrimaryTag className="post-card-primary-tag">
-                <Link to={`/tags/${_.kebabCase(post.tags[0])}/`}>
-                  {post.tags[0]}
-                </Link>
-              </PostCardPrimaryTag>
-            )}
+        <PostCardHeader className="post-card-header">
+          {post.tags && config.showAllTags && (
+            <PostCardPrimaryTag className="post-card-primary-tag">
+              {post.tags.map((tag, idx) => (
+                <React.Fragment key={idx}>
+                  {idx > 0 && <>, &nbsp;</>}
+                  <Link to={`/tags/${_.kebabCase(tag.name)}/`}>{tag.name}</Link>
+                </React.Fragment>
+              ))}
+            </PostCardPrimaryTag>
+          )}
+          {post.tags && !config.showAllTags && (
+            <PostCardPrimaryTag className="post-card-primary-tag">
+              <Link to={`/tags/${_.kebabCase(post.tags[0])}/`}>
+                {post.tags[0]}
+              </Link>
+            </PostCardPrimaryTag>
+          )}
+          <Link to={`/blog/${post.slug}`} css={PostCardContentLink}>
             <PostCardTitle className="post-card-title">
               {post.title}
             </PostCardTitle>
-          </PostCardHeader>
+          </Link>
+        </PostCardHeader>
+        <Link to={`/blog/${post.slug}`} css={PostCardContentLink}>
           <PostCardExcerpt className="post-card-excerpt">
             <p>{post.excerpt || post.excerpt}</p>
           </PostCardExcerpt>
@@ -79,7 +77,7 @@ export const PostCard = ({ post, large = false }) => {
           <PostCardBylineContent className="post-card-byline-content">
             <span>
               {post.authors.map((author, index) => (
-                <React.Fragment key={author.name}>
+                <React.Fragment key={index}>
                   <Link to={`/author/${_.kebabCase(author.name)}/`}>
                     {author.name}
                   </Link>

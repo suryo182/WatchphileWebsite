@@ -1,98 +1,103 @@
-import { Link } from 'gatsby';
-import { darken } from 'polished';
-import React from 'react';
+import { Link } from "gatsby"
+import { darken } from "polished"
+import React from "react"
 
-import { css } from '@emotion/react';
-import styled from '@emotion/styled';
+import { css } from "@emotion/react"
+import styled from "@emotion/styled"
 
-import { colors } from '../../styles/colors';
-import { SocialLink, SocialLinkFb } from '../../styles/shared';
-import config from '../../utils/siteConfig';
-import { Facebook } from '../icons/facebook';
-import { Twitter } from '../icons/twitter';
-import { SubscribeModal } from '../subscribe/SubscribeModal';
-import { SiteNavLogo } from './SiteNavLogo';
-
-
+import { colors } from "../../styles/colors"
+import { SocialLink, SocialLinkFb } from "../../styles/shared"
+import config from "../../utils/siteConfig"
+import { Facebook } from "../icons/facebook"
+import { Twitter } from "../icons/twitter"
+import { SubscribeModal } from "../subscribe/SubscribeModal"
+import { SiteNavLogo } from "./SiteNavLogo"
 
 class SiteNav extends React.Component {
-  subscribe = React.createRef();
-  titleRef = React.createRef();
-  lastScrollY = 0;
-  ticking = false;
-  state = { showTitle: false };
+  subscribe = React.createRef()
+  titleRef = React.createRef()
+  lastScrollY = 0
+  ticking = false
+  state = { showTitle: false }
 
   openModal = () => {
     if (this.subscribe.current) {
-      this.subscribe.current.open();
+      this.subscribe.current.open()
     }
-  };
+  }
 
   componentDidMount() {
-    this.lastScrollY = window.scrollY;
+    this.lastScrollY = window.scrollY
     if (this.props.isPost) {
-      window.addEventListener('scroll', this.onScroll, { passive: true });
+      window.addEventListener("scroll", this.onScroll, { passive: true })
     }
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener("scroll", this.onScroll)
   }
 
   onScroll = () => {
     if (!this.titleRef || !this.titleRef.current) {
-      return;
+      return
     }
 
     if (!this.ticking) {
-      requestAnimationFrame(this.update);
+      requestAnimationFrame(this.update)
     }
 
-    this.ticking = true;
-  };
+    this.ticking = true
+  }
 
   update = () => {
     if (!this.titleRef || !this.titleRef.current) {
-      return;
+      return
     }
 
-    this.lastScrollY = window.scrollY;
+    this.lastScrollY = window.scrollY
 
-    const trigger = this.titleRef.current.getBoundingClientRect().top;
-    const triggerOffset = this.titleRef.current.offsetHeight + 35;
+    const trigger = this.titleRef.current.getBoundingClientRect().top
+    const triggerOffset = this.titleRef.current.offsetHeight + 35
 
     // show/hide post title
     if (this.lastScrollY >= trigger + triggerOffset) {
-      this.setState({ showTitle: true });
+      this.setState({ showTitle: true })
     } else {
-      this.setState({ showTitle: false });
+      this.setState({ showTitle: false })
     }
 
-    this.ticking = false;
-  };
+    this.ticking = false
+  }
 
   render() {
-    const { isHome = false, isPost = false, post = {} } = this.props;
+    const { isHome = false, isPost = false, post = {} } = this.props
     return (
       <>
         {config.showSubscribe && <SubscribeModal ref={this.subscribe} />}
         <nav css={SiteNavStyles}>
           <SiteNavLeft className="site-nav-left">
             {!isHome && <SiteNavLogo />}
-            <SiteNavContent css={[this.state.showTitle ? HideNav : '']}>
+            <SiteNavContent css={[this.state.showTitle ? HideNav : ""]}>
+              {/* eslint-disable-next-line */}
               <ul css={NavStyles} role="menu">
+                {/* eslint-disable-next-line */}
                 <li role="menuitem">
                   <Link to="/blog" activeClassName="nav-current">
                     Home
                   </Link>
                 </li>
+                {/* eslint-disable-next-line */}
                 <li role="menuitem">
                   <Link to="/about" activeClassName="nav-current">
                     About
                   </Link>
                 </li>
+                {/* eslint-disable-next-line */}
                 <li role="menuitem">
-                  <Link to="/tags/getting-started/" activeClassName="nav-current">
+                  <Link
+                    to="/tags/getting-started/"
+                    activeClassName="nav-current"
+                  >
                     Getting Started
                   </Link>
                 </li>
@@ -131,12 +136,14 @@ class SiteNav extends React.Component {
               )}
             </SocialLinks>
             {config.showSubscribe && (
-              <SubscribeButton onClick={this.openModal}>Subscribe</SubscribeButton>
+              <SubscribeButton onClick={this.openModal}>
+                Subscribe
+              </SubscribeButton>
             )}
           </SiteNavRight>
         </nav>
       </>
-    );
+    )
   }
 }
 
@@ -147,13 +154,13 @@ export const SiteNavMain = css`
   left: 0;
   z-index: 1000;
   /* background: color(var(--darkgrey) l(-5%)) */
-  background: ${darken('0.05', colors.darkgrey)};
+  background: ${darken("0.05", colors.darkgrey)};
 
   @media (max-width: 700px) {
     padding-right: 0;
     padding-left: 0;
   }
-`;
+`
 
 const SiteNavStyles = css`
   position: relative;
@@ -164,7 +171,7 @@ const SiteNavStyles = css`
   overflow-y: hidden;
   height: 64px;
   font-size: 1.3rem;
-`;
+`
 
 const SiteNavLeft = styled.div`
   flex: 1 0 auto;
@@ -186,12 +193,12 @@ const SiteNavLeft = styled.div`
     margin-right: 0;
     padding-left: 5vw;
   }
-`;
+`
 
 const SiteNavContent = styled.div`
   position: relative;
   align-self: flex-start;
-`;
+`
 
 const NavStyles = css`
   position: absolute;
@@ -223,7 +230,7 @@ const NavStyles = css`
   }
 
   li a:before {
-    content: '';
+    content: "";
     position: absolute;
     right: 100%;
     bottom: 8px;
@@ -242,7 +249,7 @@ const NavStyles = css`
   .nav-current {
     opacity: 1;
   }
-`;
+`
 
 const SiteNavRight = styled.div`
   flex: 0 1 auto;
@@ -255,13 +262,13 @@ const SiteNavRight = styled.div`
   @media (max-width: 700px) {
     display: none;
   }
-`;
+`
 
 const SocialLinks = styled.div`
   flex-shrink: 0;
   display: flex;
   align-items: center;
-`;
+`
 
 const SubscribeButton = styled.a`
   display: block;
@@ -278,7 +285,7 @@ const SubscribeButton = styled.a`
     opacity: 1;
     cursor: pointer;
   }
-`;
+`
 
 const NavPostTitle = styled.span`
   visibility: hidden;
@@ -297,10 +304,10 @@ const NavPostTitle = styled.span`
   }
 
   .dash:before {
-    content: '– ';
+    content: "– ";
     opacity: 0.5;
   }
-`;
+`
 
 const HideNav = css`
   ul {
@@ -313,6 +320,6 @@ const HideNav = css`
     opacity: 1;
     transform: translateY(0);
   }
-`;
+`
 
-export default SiteNav;
+export default SiteNav

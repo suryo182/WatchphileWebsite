@@ -1,54 +1,5 @@
 const path = require("path")
 const _ = require("lodash")
-const readingTime = require("reading-time")
-
-// exports.onCreateNode = ({ node, actions, getNode }) => {
-//   const { createNodeField } = actions
-
-//   // Sometimes, optional fields tend to get not picked up by the GraphQL
-//   // interpreter if not a single content uses it. Therefore, we're putting them
-//   // through `createNodeField` so that the fields still exist and GraphQL won't
-//   // trip up. An empty string is still required in replacement to `null`.
-//   // eslint-disable-next-line default-case
-//   switch (node.internal.type) {
-//     case "MarkdownRemark": {
-//       const { permalink, layout, primaryTag } = node.frontmatter
-//       const { relativePath } = getNode(node.parent)
-
-//       let slug = permalink
-
-//       if (!slug) {
-//         slug = `/${relativePath.replace(".md", "")}/`
-//       }
-
-//       // Used to generate URL to view this content.
-//       createNodeField({
-//         node,
-//         name: "slug",
-//         value: slug || "",
-//       })
-
-//       // Used to determine a page layout.
-//       createNodeField({
-//         node,
-//         name: "layout",
-//         value: layout || "",
-//       })
-
-//       createNodeField({
-//         node,
-//         name: "primaryTag",
-//         value: primaryTag || "",
-//       })
-
-//       createNodeField({
-//         node,
-//         name: "readingTime",
-//         value: readingTime(node.rawMarkdownBody),
-//       })
-//     }
-//   }
-// }
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
@@ -99,13 +50,9 @@ exports.createPages = async ({ graphql, actions }) => {
     throw new Error(result.errors)
   }
 
-  // Create post pages
-  // const posts = result.data.allMarkdownRemark.edges
-  // const posts = result.data.allGhostPage.edges
-
   const tags = result.data.allGhostTag.edges
   const authors = result.data.allGhostAuthor.edges
-  const pages = result.data.allGhostPage.edges
+  // const pages = result.data.allGhostPage.edges
   const posts = result.data.allGhostPost.edges
 
   // Create paginated index
@@ -170,7 +117,6 @@ exports.createPages = async ({ graphql, actions }) => {
   // Create author pages
   const authorTemplate = path.resolve("./src/templates/author.jsx")
   authors.forEach(edge => {
-    console.log(edge, "<<< author edge")
     createPage({
       path: `/author/${_.kebabCase(edge.node.slug)}/`,
       component: authorTemplate,

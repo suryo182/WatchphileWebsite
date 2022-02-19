@@ -18,7 +18,7 @@ export const ReadNextCard = props => {
     )
     .slice(0, 3)
 
-  const relatedTags = props.relatedPosts.edges.filter(item => {
+  const relatedTags = props.relatedPosts.edges.filter(item => { // eslint-disable-line
     if (item.node.tags.length) {
       for (const tag of item.node.tags) {
         if (tag.name === props.tags[0].name) {
@@ -27,8 +27,6 @@ export const ReadNextCard = props => {
       }
     }
   })
-
-  console.log(relatedTags, "<<< related tags")
 
   return (
     <ReadNextCardArticle className="read-next-card">

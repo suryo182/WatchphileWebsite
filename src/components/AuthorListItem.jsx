@@ -1,5 +1,4 @@
 import { Link } from "gatsby"
-import { GatsbyImage, getImage, StaticImage } from "gatsby-plugin-image"
 import * as _ from "lodash"
 import { lighten } from "polished"
 import React, { useState } from "react"
@@ -7,7 +6,6 @@ import React, { useState } from "react"
 import { css } from "@emotion/react"
 
 import { colors } from "../styles/colors"
-import { Author } from "../templates/post"
 import { AuthorProfileImage } from "./PostCard"
 import styled from "@emotion/styled"
 import { Avatar } from "../components/icons/avatar"
