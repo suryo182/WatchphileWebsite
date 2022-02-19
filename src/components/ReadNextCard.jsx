@@ -1,61 +1,79 @@
-import { Link } from 'gatsby';
-import React from 'react';
-import { lighten } from 'polished';
-import styled from '@emotion/styled';
-import * as _ from 'lodash';
+import { Link } from "gatsby"
+import React from "react"
+import { lighten } from "polished"
+import styled from "@emotion/styled"
+import * as _ from "lodash"
 
-import { colors } from '../styles/colors';
-import { format } from 'date-fns';
-
+import { colors } from "../styles/colors"
+import { format } from "date-fns"
 
 export const ReadNextCard = props => {
   // filter out current post and limit to 3 related posts
   const relatedPosts = props.relatedPosts.edges
-    .filter(post => post.node.fields.slug !== props.currentPageSlug)
-    .slice(0, 3);
+    .filter(
+      post =>
+        post.node.slug !== props.currentPageSlug &&
+        post.node.tags.length &&
+        post.node.tags[0].name === props.tags[0].name
+    )
+    .slice(0, 3)
+
+  const relatedTags = props.relatedPosts.edges.filter(item => {
+    if (item.node.tags.length) {
+      for (const tag of item.node.tags) {
+        if (tag.name === props.tags[0].name) {
+          return tag
+        }
+      }
+    }
+  })
+
+  console.log(relatedTags, "<<< related tags")
 
   return (
     <ReadNextCardArticle className="read-next-card">
       <header className="read-next-card-header">
         <ReadNextCardHeaderTitle>
-          <span>More in</span>{' '}
-          <Link to={`/tags/${_.kebabCase(props.tags[0])}/`}>{props.tags[0]}</Link>
+          <span>More in</span>{" "}
+          <Link to={`/tags/${_.kebabCase(props.tags[0].name)}/`}>
+            {props.tags[0].name}
+          </Link>
         </ReadNextCardHeaderTitle>
       </header>
       <ReadNextCardContent className="read-next-card-content">
         <ul>
           {relatedPosts.map(n => {
-            const date = new Date(n.node.frontmatter.date);
+            const date = new Date(n.node.created_at)
             // 2018-08-20
-            const datetime = format(date, 'yyyy-MM-dd');
+            const datetime = format(date, "yyyy-MM-dd")
             // 20 AUG 2018
-            const displayDatetime = format(date, 'dd LLL yyyy');
+            const displayDatetime = format(date, "dd LLL yyyy")
             return (
-              <li key={n.node.frontmatter.title}>
+              <li key={n.node.title}>
                 <h4>
-                  <Link to={n.node.fields.slug}>{n.node.frontmatter.title}</Link>
+                  <Link to={`/blog/${n.node.slug}`}>{n.node.title}</Link>
                 </h4>
                 <ReadNextCardMeta className="read-next-card-meta">
                   <p>
-                    <time dateTime={datetime}>{displayDatetime}</time> - {n.node.timeToRead} min
-                    read
+                    <time dateTime={datetime}>{displayDatetime}</time> -{" "}
+                    {n.node.reading_time} min read
                   </p>
                 </ReadNextCardMeta>
               </li>
-            );
+            )
           })}
         </ul>
       </ReadNextCardContent>
       <ReadNextCardFooter className="read-next-card-footer">
-        <Link to={`/tags/${_.kebabCase(props.tags[0])}/`}>
-          {props.relatedPosts.totalCount > 1 && `See all ${props.relatedPosts.totalCount} posts`}
-          {props.relatedPosts.totalCount === 1 && '1 post'}
-          {props.relatedPosts.totalCount === 0 && 'No posts'} →
+        <Link to={`/tags/${_.kebabCase(props.tags[0].name)}/`}>
+          {relatedTags.length > 1 && `See all ${relatedTags.length} posts`}
+          {relatedTags.length === 1 && "1 post"}
+          {relatedTags.length === 0 && "No posts"} →
         </Link>
       </ReadNextCardFooter>
     </ReadNextCardArticle>
-  );
-};
+  )
+}
 
 const ReadNextCardArticle = styled.article`
   position: relative;
@@ -70,8 +88,8 @@ const ReadNextCardArticle = styled.article`
     color(var(--darkgrey) l(-5%))
   ); */
   background: linear-gradient(
-    ${lighten('0.02', colors.darkgrey)},
-    ${lighten('-0.05', colors.darkgrey)}
+    ${lighten("0.02", colors.darkgrey)},
+    ${lighten("-0.05", colors.darkgrey)}
   );
   border-radius: 3px;
 
@@ -94,7 +112,7 @@ const ReadNextCardArticle = styled.article`
     padding: 0;
     background: none;
   }
-`;
+`
 
 const ReadNextCardHeaderTitle = styled.h3`
   margin: 0;
@@ -115,7 +133,7 @@ const ReadNextCardHeaderTitle = styled.h3`
   a:hover {
     opacity: 1;
   }
-`;
+`
 
 const ReadNextCardContent = styled.div`
   font-size: 1.7rem;
@@ -158,7 +176,7 @@ const ReadNextCardContent = styled.div`
   li a:hover {
     opacity: 1;
   }
-`;
+`
 
 const ReadNextCardMeta = styled.div`
   margin-top: 2px;
@@ -170,7 +188,7 @@ const ReadNextCardMeta = styled.div`
     margin: 0;
     color: rgba(255, 255, 255, 0.6);
   }
-`;
+`
 
 const ReadNextCardFooter = styled.footer`
   position: relative;
@@ -191,4 +209,4 @@ const ReadNextCardFooter = styled.footer`
     color: ${colors.yellow};
     text-decoration: none;
   }
-`;
+`

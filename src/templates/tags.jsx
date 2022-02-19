@@ -1,12 +1,11 @@
-import { graphql } from 'gatsby';
-import React from 'react';
-import { getSrc } from 'gatsby-plugin-image';
-
-import { Footer } from '../components/Footer';
-import SiteNav from '../components/header/SiteNav';
-import { PostCard } from '../components/PostCard';
-import { Wrapper } from '../components/Wrapper';
-import IndexLayout from '../layouts';
+import { graphql } from "gatsby"
+import React from "react"
+import { getSrc } from "gatsby-plugin-image"
+import { Footer } from "../components/Footer"
+import SiteNav from "../components/header/SiteNav"
+import { PostCard } from "../components/PostCard"
+import { Wrapper } from "../components/Wrapper"
+import IndexLayout from "../layouts"
 import {
   inner,
   outer,
@@ -20,18 +19,15 @@ import {
   SiteArchiveHeader,
   ResponsiveHeaderBackground,
   SiteHeaderBackground,
-} from '../styles/shared';
-import { PageContext } from './post';
-import { Helmet } from 'react-helmet';
-import config from '../utils/siteConfig';
-
-
+} from "../styles/shared"
+import { Helmet } from "react-helmet"
+import config from "../utils/siteConfig"
 
 const Tags = ({ pageContext, data, location }) => {
-  const tag = pageContext.tag ? pageContext.tag : '';
-  const { edges, totalCount } = data.allMarkdownRemark;
-  const tagData = data.allTagYaml.edges.find(n => n.node.id.toLowerCase() === tag.toLowerCase());
-
+  const tag = pageContext.slug ? pageContext.slug : ""
+  const totalCount = data.allGhostPost.edges.length
+  const { edges } = data.allGhostPost
+  const tagData = data.ghostTag
   return (
     <IndexLayout>
       <Helmet>
@@ -39,24 +35,32 @@ const Tags = ({ pageContext, data, location }) => {
         <title>
           {tag} - {config.title}
         </title>
-        <meta name="description" content={tagData?.node ? tagData.node.description : ''} />
+        <meta
+          name="description"
+          content={tagData.description ? tagData.description : ""}
+        />
         <meta property="og:site_name" content={config.title} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={`${tag} - ${config.title}`} />
         <meta property="og:url" content={config.siteUrl + location.pathname} />
-        {config.facebook && <meta property="article:publisher" content={config.facebook} />}
+        {config.facebook && (
+          <meta property="article:publisher" content={config.facebook} />
+        )}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${tag} - ${config.title}`} />
         <meta name="twitter:url" content={config.siteUrl + location.pathname} />
         {config.twitter && (
           <meta
             name="twitter:site"
-            content={`@${config.twitter.split('https://twitter.com/')[1]}`}
+            content={`@${config.twitter.split("https://twitter.com/")[1]}`}
           />
         )}
       </Helmet>
       <Wrapper>
-        <header className="site-archive-header" css={[SiteHeader, SiteArchiveHeader]}>
+        <header
+          className="site-archive-header"
+          css={[SiteHeader, SiteArchiveHeader]}
+        >
           <div css={[outer, SiteNavMain]}>
             <div css={inner}>
               <SiteNav isHome={false} />
@@ -68,15 +72,15 @@ const Tags = ({ pageContext, data, location }) => {
             className="site-header-background"
           >
             <SiteHeaderContent css={inner} className="site-header-content">
-              <SiteTitle className="site-title">{tag}</SiteTitle>
+              <SiteTitle className="site-title">{tagData.name}</SiteTitle>
               <SiteDescription className="site-description">
-                {tagData?.node.description ? (
-                  tagData.node.description
+                {tagData.description ? (
+                  tagData.description
                 ) : (
                   <>
                     A collection of {totalCount > 1 && `${totalCount} posts`}
-                    {totalCount === 1 && '1 post'}
-                    {totalCount === 0 && 'No posts'}
+                    {totalCount === 1 && "1 post"}
+                    {totalCount === 0 && "No posts"}
                   </>
                 )}
               </SiteDescription>
@@ -87,7 +91,7 @@ const Tags = ({ pageContext, data, location }) => {
           <div css={inner}>
             <div css={[PostFeed]}>
               {edges.map(({ node }) => (
-                <PostCard key={node.fields.slug} post={node} />
+                <PostCard key={node.slug} post={node} />
               ))}
             </div>
           </div>
@@ -95,64 +99,25 @@ const Tags = ({ pageContext, data, location }) => {
         <Footer />
       </Wrapper>
     </IndexLayout>
-  );
-};
+  )
+}
 
-export default Tags;
+export default Tags
 
 export const pageQuery = graphql`
-  query ($tag: String) {
-    allTagYaml {
-      edges {
-        node {
-          id
-          description
-          image {
-            childImageSharp {
-              gatsbyImageData(layout: FULL_WIDTH)
-            }
-          }
-        }
-      }
+  query GhostTagQuery($slug: String!) {
+    ghostTag(slug: { eq: $slug }) {
+      ...GhostTagFields
     }
-    allMarkdownRemark(
-      limit: 2000
-      sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { tags: { in: [$tag] }, draft: { ne: true } } }
+    allGhostPost(
+      sort: { order: DESC, fields: [published_at] }
+      filter: { tags: { elemMatch: { slug: { eq: $slug } } } }
     ) {
-      totalCount
       edges {
         node {
-          excerpt
-          frontmatter {
-            title
-            excerpt
-            tags
-            date
-            image {
-              childImageSharp {
-                gatsbyImageData(layout: FULL_WIDTH)
-              }
-            }
-            author {
-              name
-              bio
-              avatar {
-                childImageSharp {
-                  gatsbyImageData(layout: FULL_WIDTH, breakpoints: [40, 80, 120])
-                }
-              }
-            }
-          }
-          fields {
-            readingTime {
-              text
-            }
-            layout
-            slug
-          }
+          ...GhostPostFields
         }
       }
     }
   }
-`;
+`

@@ -10,6 +10,7 @@ import { colors } from "../styles/colors"
 import { Author } from "../templates/post"
 import { AuthorProfileImage } from "./PostCard"
 import styled from "@emotion/styled"
+import { Avatar } from "../components/icons/avatar"
 
 export const AuthorListItem = props => {
   const [hovered, setHover] = useState(false)
@@ -57,12 +58,9 @@ export const AuthorListItem = props => {
               alt={props.author.profile_image}
             />
           ) : (
-            <StaticImage
-              css={AuthorProfileImage}
-              className="author-profile-image"
-              alt={props.author.profile_image}
-              src="../images/ghost.png"
-            />
+            <div css={AuthorProfileImage} className="author-profile-image">
+              <Avatar />
+            </div>
           )}
           <div className="author-info">
             <div className="bio">
@@ -91,12 +89,9 @@ export const AuthorListItem = props => {
             alt={props.author.name}
           />
         ) : (
-          <StaticImage
-            css={AuthorProfileImage}
-            className="author-profile-image"
-            alt={props.author.name}
-            src="../images/ghost.png"
-          />
+          <div css={AuthorProfileImage} className="author-profile-image">
+            <Avatar />
+          </div>
         )}
       </Link>
     </AuthorListItemLi>

@@ -14,8 +14,8 @@ module.exports = {
   // backgroundColor: `#e9e9e9`, // Used for Offline Manifest
   // themeColor: `#15171A`, // Used for Offline Manifest
 
-  title: "Ghost",
-  description: "The professional publishing platform",
+  title: "watchphile",
+  description: "Find your next movies/tv shows. Tailored for you",
   coverImage: "",
   logo: "",
   lang: "en",

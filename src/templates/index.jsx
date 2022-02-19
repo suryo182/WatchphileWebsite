@@ -28,7 +28,7 @@ import config from "../utils/siteConfig"
 const IndexPage = props => {
   const width = getImage(props.data.header)?.width
   const height = getImage(props.data.header)?.height
-  console.log(props, "<<< PROPS")
+  const site = props.data.allGhostSettings.edges[0].node
 
   return (
     <IndexLayout css={HomePosts}>
@@ -75,9 +75,7 @@ const IndexPage = props => {
         <div
           css={[outer, SiteHeader, SiteHeaderStyles]}
           className="site-header-background"
-          style={{
-            backgroundImage: `url('${getSrc(props.data.header)}')`,
-          }}
+          style={{ ...site.cover_image && { backgroundImage: `url(${site.cover_image})` } }}
         >
           <div css={inner}>
             <SiteNav isHome />
@@ -100,14 +98,13 @@ const IndexPage = props => {
         <main id="site-main" css={[SiteMain, outer]}>
           <div css={[inner, Posts]}>
             <div css={[PostFeed]}>
-              {props.data.allGhostPost.edges.map(
-                (post, index) =>
-                    <PostCard
-                      key={post.node.slug}
-                      post={post.node}
-                      large={index === 0}
-                    />
-              )}
+              {props.data.allGhostPost.edges.map((post, index) => (
+                <PostCard
+                  key={post.node.slug}
+                  post={post.node}
+                  large={index === 0}
+                />
+              ))}
             </div>
           </div>
         </main>
@@ -137,63 +134,15 @@ export const pageQuery = graphql`
         }
       }
     }
-    logo: file(relativePath: { eq: "img/ghost-logo.png" }) {
-      childImageSharp {
-        gatsbyImageData(layout: FIXED)
-      }
-    }
-    header: file(relativePath: { eq: "img/blog-cover.png" }) {
-      childImageSharp {
-        gatsbyImageData(width: 2000, quality: 100, layout: FIXED)
-      }
-    }
-    allMarkdownRemark(
-      sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { draft: { ne: true } } }
-      limit: $limit
-      skip: $skip
-    ) {
+    allGhostSettings {
       edges {
         node {
-          frontmatter {
-            title
-            date
-            tags
-            draft
-            excerpt
-            image {
-              childImageSharp {
-                gatsbyImageData(layout: FULL_WIDTH)
-              }
-            }
-            author {
-              name
-              bio
-              avatar {
-                childImageSharp {
-                  gatsbyImageData(
-                    layout: FULL_WIDTH
-                    breakpoints: [40, 80, 120]
-                  )
-                }
-              }
-            }
-          }
-          excerpt
-          fields {
-            readingTime {
-              text
-            }
-            layout
-            slug
-          }
+          ...GhostSettingsFields
         }
       }
     }
   }
 `
-
-
 
 const HomePosts = css`
   @media (min-width: 795px) {

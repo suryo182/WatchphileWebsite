@@ -1,138 +1,159 @@
-import { format } from 'date-fns';
-import { graphql, Link } from 'gatsby';
-import { GatsbyImage, getSrc, getImage } from 'gatsby-plugin-image';
-import * as _ from 'lodash';
-import { lighten, setLightness } from 'polished';
-import React from 'react';
-import { Helmet } from 'react-helmet';
+import { format } from "date-fns"
+import { graphql, Link } from "gatsby"
+import { GatsbyImage, getSrc, getImage } from "gatsby-plugin-image"
+import * as _ from "lodash"
+import { lighten, setLightness } from "polished"
+import React from "react"
+import { Helmet } from "react-helmet"
 
-import { css } from '@emotion/react';
-import styled from '@emotion/styled';
+import { css } from "@emotion/react"
+import styled from "@emotion/styled"
 
-import { Footer } from '../components/Footer';
-import SiteNav, { SiteNavMain } from '../components/header/SiteNav';
-import PostContent from '../components/PostContent';
-import { ReadNext } from '../components/ReadNext';
-import { Subscribe } from '../components/subscribe/Subscribe';
-import { Wrapper } from '../components/Wrapper';
-import IndexLayout from '../layouts';
-import { colors } from '../styles/colors';
-import { inner, outer, SiteMain } from '../styles/shared';
-import config from '../utils/siteConfig';
-import { AuthorList } from '../components/AuthorList';
-
-
+import { Footer } from "../components/Footer"
+import SiteNav, { SiteNavMain } from "../components/header/SiteNav"
+import PostContent from "../components/PostContent"
+import { ReadNext } from "../components/ReadNext"
+import { Subscribe } from "../components/subscribe/Subscribe"
+import { Wrapper } from "../components/Wrapper"
+import IndexLayout from "../layouts"
+import { colors } from "../styles/colors"
+import { inner, outer, SiteMain } from "../styles/shared"
+import config from "../utils/siteConfig"
+import { AuthorList } from "../components/AuthorList"
 
 const PageTemplate = ({ data, pageContext, location }) => {
-  const post = data.markdownRemark;
-  let width;
-  let height;
-  if (post.frontmatter.image) {
-    width = getImage(post.frontmatter.image)?.width;
-    height = getImage(post.frontmatter.image)?.height;
-  }
+  const post = data.ghostPost
 
-  const date = new Date(post.frontmatter.date);
+  let width
+  let height
+
+  // if (post.image) {
+  //   width = getImage(post.image)?.width
+  //   height = getImage(post.image)?.height
+  // }
+
+  const date = new Date(post.created_at)
   // 2018-08-20
-  const datetime = format(date, 'yyyy-MM-dd');
+  const datetime = format(date, "yyyy-MM-dd")
   // 20 AUG 2018
-  const displayDatetime = format(date, 'dd LLL yyyy');
+  const displayDatetime = format(date, "dd LLL yyyy")
+
 
   return (
     <IndexLayout className="post-template">
       <Helmet>
         <html lang={config.lang} />
-        <title>{post.frontmatter.title}</title>
+        <title>{post.title}</title>
 
-        <meta name="description" content={post.frontmatter.excerpt || post.excerpt} />
+        <meta name="description" content={post.excerpt || post.excerpt} />
         <meta property="og:site_name" content={config.title} />
         <meta property="og:type" content="article" />
-        <meta property="og:title" content={post.frontmatter.title} />
-        <meta property="og:description" content={post.frontmatter.excerpt || post.excerpt} />
+        <meta property="og:title" content={post.title} />
+        <meta
+          property="og:description"
+          content={post.excerpt || post.excerpt}
+        />
         <meta property="og:url" content={config.siteUrl + location.pathname} />
-        {post.frontmatter.image && (
+        {post.image && (
           <meta
             property="og:image"
-            content={`${config.siteUrl}${getSrc(post.frontmatter.image)}`}
+            content={`${config.siteUrl}${post.feature_image}`}
           />
         )}
-        <meta property="article:published_time" content={post.frontmatter.date} />
+        <meta property="article:published_time" content={post.created_at} />
         {/* not sure if modified time possible */}
         {/* <meta property="article:modified_time" content="2018-08-20T15:12:00.000Z" /> */}
-        {post.frontmatter.tags && (
-          <meta property="article:tag" content={post.frontmatter.tags[0]} />
-        )}
+        {post.tags && <meta property="article:tag" content={post.tags[0]} />}
 
-        {config.facebook && <meta property="article:publisher" content={config.facebook} />}
-        {config.facebook && <meta property="article:author" content={config.facebook} />}
+        {config.facebook && (
+          <meta property="article:publisher" content={config.facebook} />
+        )}
+        {config.facebook && (
+          <meta property="article:author" content={config.facebook} />
+        )}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={post.frontmatter.title} />
-        <meta name="twitter:description" content={post.frontmatter.excerpt || post.excerpt} />
+        <meta name="twitter:title" content={post.title} />
+        <meta
+          name="twitter:description"
+          content={post.excerpt || post.excerpt}
+        />
         <meta name="twitter:url" content={config.siteUrl + location.pathname} />
-        {post.frontmatter.image && (
+        {post.image && (
           <meta
             name="twitter:image"
-            content={`${config.siteUrl}${getSrc(post.frontmatter.image)}`}
+            content={`${config.siteUrl}${post.feature_image}`}
           />
         )}
         <meta name="twitter:label1" content="Written by" />
-        <meta name="twitter:data1" content={post.frontmatter.author[0].name} />
+        <meta name="twitter:data1" content={post.authors[0].name} />
         <meta name="twitter:label2" content="Filed under" />
-        {post.frontmatter.tags && <meta name="twitter:data2" content={post.frontmatter.tags[0]} />}
+        {post.tags && <meta name="twitter:data2" content={post.tags[0]} />}
         {config.twitter && (
           <meta
             name="twitter:site"
-            content={`@${config.twitter.split('https://twitter.com/')[1]}`}
+            content={`@${config.twitter.split("https://twitter.com/")[1]}`}
           />
         )}
         {config.twitter && (
           <meta
             name="twitter:creator"
-            content={`@${config.twitter.split('https://twitter.com/')[1]}`}
+            content={`@${config.twitter.split("https://twitter.com/")[1]}`}
           />
         )}
-        {width && <meta property="og:image:width" content={width?.toString()} />}
-        {height && <meta property="og:image:height" content={height?.toString()} />}
+        {width && (
+          <meta property="og:image:width" content={width?.toString()} />
+        )}
+        {height && (
+          <meta property="og:image:height" content={height?.toString()} />
+        )}
       </Helmet>
       <Wrapper css={PostTemplate}>
         <header className="site-header">
           <div css={[outer, SiteNavMain]}>
             <div css={inner}>
-              <SiteNav isPost post={post.frontmatter} />
+              <SiteNav isPost post={post} />
             </div>
           </div>
         </header>
         <main id="site-main" className="site-main" css={[SiteMain, outer]}>
           <div css={inner}>
             {/* TODO: no-image css tag? */}
-            <article css={[PostFull, !post.frontmatter.image && NoImage]}>
+            <article css={[PostFull, !post.image && NoImage]}>
               <PostFullHeader className="post-full-header">
                 <PostFullTags className="post-full-tags">
-                  {post.frontmatter.tags && post.frontmatter.tags.length > 0 && config.showAllTags && (
-                    post.frontmatter.tags.map((tag, idx) => (
+                  {post.tags &&
+                    post.tags.length > 0 &&
+                    config.showAllTags &&
+                    post.tags.map((tag, idx) => (
                       <React.Fragment key={tag}>
-                        {idx > 0 && (<>, &nbsp;</>)}
-                        <Link to={`/tags/${_.kebabCase(tag)}/`}>{tag}</Link>
+                        {idx > 0 && <>, &nbsp;</>}
+                        <Link to={`/tags/${_.kebabCase(tag.name)}/`}>
+                          {tag.name}
+                        </Link>
                       </React.Fragment>
-                    ))
-                  )}
-                  {post.frontmatter.tags && post.frontmatter.tags.length > 0 && !config.showAllTags && (
-                    <Link to={`/tags/${_.kebabCase(post.frontmatter.tags[0])}/`}>
-                      {post.frontmatter.tags[0]}
+                    ))}
+                  {post.tags && post.tags.length > 0 && !config.showAllTags && (
+                    <Link to={`/tags/${_.kebabCase(post.tags[0].name)}/`}>
+                      {post.tags[0].name}
                     </Link>
                   )}
                 </PostFullTags>
-                <PostFullTitle className="post-full-title">{post.frontmatter.title}</PostFullTitle>
+                <PostFullTitle className="post-full-title">
+                  {post.title}
+                </PostFullTitle>
                 <PostFullCustomExcerpt className="post-full-custom-excerpt">
-                  {post.frontmatter.excerpt}
+                  {post.excerpt}
                 </PostFullCustomExcerpt>
                 <PostFullByline className="post-full-byline">
                   <section className="post-full-byline-content">
-                    <AuthorList authors={post.frontmatter.author} tooltip="large" />
+                    <AuthorList authors={post.authors} tooltip="large" />
                     <section className="post-full-byline-meta">
                       <h4 className="author-name">
-                        {post.frontmatter.author.map(author => (
-                          <Link key={author.name} to={`/author/${_.kebabCase(author.name)}/`}>
+                        {post.authors.map(author => (
+                          <Link
+                            key={author.name}
+                            to={`/author/${_.kebabCase(author.name)}/`}
+                          >
                             {author.name}
                           </Link>
                         ))}
@@ -142,7 +163,8 @@ const PageTemplate = ({ data, pageContext, location }) => {
                           {displayDatetime}
                         </time>
                         <span className="byline-reading-time">
-                          <span className="bull">&bull;</span>{post.fields.readingTime.text}
+                          <span className="bull">&bull;</span>
+                          {post.reading_time} MIN READ
                         </span>
                       </div>
                     </section>
@@ -150,15 +172,16 @@ const PageTemplate = ({ data, pageContext, location }) => {
                 </PostFullByline>
               </PostFullHeader>
 
-              {post.frontmatter.image && (
+              {post.feature_image && (
                 <PostFullImage>
-                  <GatsbyImage
-                    image={getImage(post.frontmatter.image)}
-                    style={{ height: '100%' }}
-                    alt={post.frontmatter.title} />
+                  <img
+                    src={post.feature_image}
+                    style={{ height: "100%" }}
+                    alt={post.title}
+                  />
                 </PostFullImage>
               )}
-              <PostContent htmlAst={post.htmlAst} />
+              <PostContent html={post.html} />
 
               {/* The big email subscribe modal content */}
               {config.showSubscribe && <Subscribe title={config.title} />}
@@ -168,16 +191,33 @@ const PageTemplate = ({ data, pageContext, location }) => {
 
         <ReadNext
           currentPageSlug={location.pathname}
-          tags={post.frontmatter.tags}
-          relatedPosts={data.relatedPosts}
+          tags={post.tags}
+          relatedPosts={data.allGhostPost}
           pageContext={pageContext}
         />
 
         <Footer />
       </Wrapper>
     </IndexLayout>
-  );
-};
+  )
+}
+
+export const query = graphql`
+  query ($slug: String) {
+    ghostPost(slug: { eq: $slug }) {
+      ...GhostPostFields
+    }
+    allGhostPost(
+      sort: { order: DESC, fields: [published_at] }
+    ) {
+      edges {
+        node {
+          ...GhostPostFields
+        }
+      }
+    }
+  }
+`
 
 const PostTemplate = css`
   .site-main {
@@ -192,12 +232,12 @@ const PostTemplate = css`
       background: ${colors.darkmode};
     }
   }
-`;
+`
 
 export const PostFull = css`
   position: relative;
   z-index: 50;
-`;
+`
 
 export const NoImage = css`
   .post-full-content {
@@ -208,7 +248,7 @@ export const NoImage = css`
   .post-full-content:after {
     display: none;
   }
-`;
+`
 
 export const PostFullHeader = styled.header`
   position: relative;
@@ -229,7 +269,7 @@ export const PostFullHeader = styled.header`
   @media (max-width: 500px) {
     padding: 20px 0 35px;
   }
-`;
+`
 
 const PostFullTags = styled.section`
   display: flex;
@@ -241,7 +281,7 @@ const PostFullTags = styled.section`
   line-height: 1.4em;
   font-weight: 600;
   text-transform: uppercase;
-`;
+`
 
 const PostFullCustomExcerpt = styled.p`
   margin: 20px 0 0;
@@ -258,9 +298,9 @@ const PostFullCustomExcerpt = styled.p`
 
   @media (prefers-color-scheme: dark) {
     /* color: color(var(--midgrey) l(+10%)); */
-    color: ${lighten('0.1', colors.midgrey)};
+    color: ${lighten("0.1", colors.midgrey)};
   }
-`;
+`
 
 const PostFullByline = styled.div`
   display: flex;
@@ -268,7 +308,7 @@ const PostFullByline = styled.div`
   margin: 35px 0 0;
   padding-top: 15px;
   /* border-top: 1px solid color(var(--lightgrey) l(+10%)); */
-  border-top: 1px solid ${lighten('0.1', colors.lightgrey)};
+  border-top: 1px solid ${lighten("0.1", colors.lightgrey)};
 
   .post-full-byline-content {
     flex-grow: 1;
@@ -284,7 +324,7 @@ const PostFullByline = styled.div`
   .post-full-byline-meta {
     margin: 2px 0 0;
     /* color: color(var(--midgrey) l(+10%)); */
-    color: ${lighten('0.1', colors.midgrey)};
+    color: ${lighten("0.1", colors.midgrey)};
     font-size: 1.2rem;
     line-height: 1.2em;
     letter-spacing: 0.2px;
@@ -300,7 +340,7 @@ const PostFullByline = styled.div`
 
   .post-full-byline-meta h4 a {
     /* color: color(var(--darkgrey) l(+10%)); */
-    color: ${lighten('0.1', colors.darkgrey)};
+    color: ${lighten("0.1", colors.darkgrey)};
   }
 
   .post-full-byline-meta h4 a:hover {
@@ -316,7 +356,7 @@ const PostFullByline = styled.div`
 
   @media (prefers-color-scheme: dark) {
     /* border-top-color: color(var(--darkmode) l(+15%)); */
-    border-top-color: ${lighten('0.15', colors.darkmode)};
+    border-top-color: ${lighten("0.15", colors.darkmode)};
 
     .post-full-byline-meta h4 a {
       color: rgba(255, 255, 255, 0.75);
@@ -326,11 +366,11 @@ const PostFullByline = styled.div`
       color: #fff;
     }
   }
-`;
+`
 
 export const PostFullTitle = styled.h1`
   margin: 0 0 0.2em;
-  color: ${setLightness('0.05', colors.darkgrey)};
+  color: ${setLightness("0.05", colors.darkgrey)};
   @media (max-width: 500px) {
     margin-top: 0.2em;
     font-size: 3.3rem;
@@ -339,7 +379,7 @@ export const PostFullTitle = styled.h1`
   @media (prefers-color-scheme: dark) {
     color: rgba(255, 255, 255, 0.9);
   }
-`;
+`
 
 const PostFullImage = styled.figure`
   margin: 25px 0 50px;
@@ -363,69 +403,6 @@ const PostFullImage = styled.figure`
     margin-bottom: 4vw;
     height: 350px;
   }
-`;
+`
 
-export const query = graphql`query ($slug: String, $primaryTag: String) {
-  logo: file(relativePath: {eq: "img/ghost-logo.png"}) {
-    childImageSharp {
-      gatsbyImageData(layout: FIXED)
-    }
-  }
-  markdownRemark(fields: {slug: {eq: $slug}}) {
-    html
-    htmlAst
-    excerpt
-    fields {
-      readingTime {
-        text
-      }
-    }
-    frontmatter {
-      title
-      userDate: date(formatString: "D MMMM YYYY")
-      date
-      tags
-      excerpt
-      image {
-        childImageSharp {
-          gatsbyImageData(layout: FULL_WIDTH)
-        }
-      }
-      author {
-        name
-        bio
-        avatar {
-          childImageSharp {
-            gatsbyImageData(layout: FULL_WIDTH, breakpoints: [40, 80, 120])
-          }
-        }
-      }
-    }
-  }
-  relatedPosts: allMarkdownRemark(
-    filter: {frontmatter: {tags: {in: [$primaryTag]}, draft: {ne: true}}}
-    limit: 5
-    sort: {fields: [frontmatter___date], order: DESC}
-  ) {
-    totalCount
-    edges {
-      node {
-        id
-        excerpt
-        frontmatter {
-          title
-          date
-        }
-        fields {
-          readingTime {
-            text
-          }
-          slug
-        }
-      }
-    }
-  }
-}
-`;
-
-export default PageTemplate;
+export default PageTemplate

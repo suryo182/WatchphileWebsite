@@ -1,14 +1,14 @@
-import { graphql } from 'gatsby';
-import React from 'react';
-import styled from '@emotion/styled';
-import { css } from '@emotion/react';
-import { getSrc } from 'gatsby-plugin-image';
-
-import { Footer } from '../components/Footer';
-import SiteNav from '../components/header/SiteNav';
-import { PostCard } from '../components/PostCard';
-import { Wrapper } from '../components/Wrapper';
-import IndexLayout from '../layouts';
+import { graphql } from "gatsby"
+import React from "react"
+import styled from "@emotion/styled"
+import { css } from "@emotion/react"
+import { getSrc } from "gatsby-plugin-image"
+import { Footer } from "../components/Footer"
+import SiteNav from "../components/header/SiteNav"
+import { PostCard } from "../components/PostCard"
+import { Wrapper } from "../components/Wrapper"
+import { Avatar } from "../components/icons/avatar"
+import IndexLayout from "../layouts"
 import {
   AuthorProfileImage,
   inner,
@@ -22,30 +22,14 @@ import {
   SiteNavMain,
   ResponsiveHeaderBackground,
   SiteHeaderBackground,
-} from '../styles/shared';
-import { PageContext } from './post';
-import { Helmet } from 'react-helmet';
-import config from '../utils/siteConfig';
-
+} from "../styles/shared"
+import { Helmet } from "react-helmet"
+import config from "../utils/siteConfig"
 
 const Author = ({ data, location }) => {
-  const author = data.authorYaml;
-
-  const edges = data.allMarkdownRemark.edges.filter(edge => {
-    const isDraft = edge.node.frontmatter.draft !== true || process.env.NODE_ENV === 'development';
-
-    let authorParticipated = false;
-    if (edge.node.frontmatter.author) {
-      edge.node.frontmatter.author.forEach(element => {
-        if (element.name === author.name) {
-          authorParticipated = true;
-        }
-      });
-    }
-
-    return isDraft && authorParticipated;
-  });
-  const totalCount = edges.length;
+  const { edges } = data.allGhostPost
+  const totalCount = edges.length
+  const author = data.ghostAuthor
 
   return (
     <IndexLayout>
@@ -57,28 +41,43 @@ const Author = ({ data, location }) => {
         <meta name="description" content={author.bio} />
         <meta property="og:site_name" content={config.title} />
         <meta property="og:type" content="profile" />
-        <meta property="og:title" content={`${author.name} - ${config.title}`} />
+        <meta
+          property="og:title"
+          content={`${author.name} - ${config.title}`}
+        />
         <meta property="og:url" content={config.siteUrl + location.pathname} />
-        <meta property="article:publisher" content="https://www.facebook.com/ghost" />
-        <meta property="article:author" content="https://www.facebook.com/ghost" />
+        <meta
+          property="article:publisher"
+          content="https://www.facebook.com/ghost"
+        />
+        <meta
+          property="article:author"
+          content="https://www.facebook.com/ghost"
+        />
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content={`${author.name} - ${config.title}`} />
+        <meta
+          name="twitter:title"
+          content={`${author.name} - ${config.title}`}
+        />
         <meta name="twitter:url" content={config.siteUrl + location.pathname} />
         {config.twitter && (
           <meta
             name="twitter:site"
-            content={`@${config.twitter.split('https://twitter.com/')[1]}`}
+            content={`@${config.twitter.split("https://twitter.com/")[1]}`}
           />
         )}
         {config.twitter && (
           <meta
             name="twitter:creator"
-            content={`@${config.twitter.split('https://twitter.com/')[1]}`}
+            content={`@${config.twitter.split("https://twitter.com/")[1]}`}
           />
         )}
       </Helmet>
       <Wrapper>
-        <header className="site-archive-header" css={[SiteHeader, SiteArchiveHeader]}>
+        <header
+          className="site-archive-header"
+          css={[SiteHeader, SiteArchiveHeader]}
+        >
           <div css={[outer, SiteNavMain]}>
             <div css={inner}>
               <SiteNav isHome={false} />
@@ -91,16 +90,31 @@ const Author = ({ data, location }) => {
             className="site-header-background"
           >
             <div css={inner}>
-              <SiteHeaderContent css={AuthorHeader} className="site-header-content author-header">
-                <img
-                  style={{ marginTop: '8px' }}
-                  css={[AuthorProfileImage, AuthorProfileBioImage]}
-                  src={getSrc(data.authorYaml.avatar)}
-                  alt={author.name}
-                />
+              <SiteHeaderContent
+                css={AuthorHeader}
+                className="site-header-content author-header"
+              >
+                {author.cover_image ? (
+                  <img
+                    style={{ marginTop: "8px" }}
+                    css={[AuthorProfileImage, AuthorProfileBioImage]}
+                    src={getSrc(author.cover_image)}
+                    alt={author.name}
+                  />
+                ) : (
+                  <div
+                    style={{ marginTop: "8px" }}
+                    css={[AuthorProfileBioImage]}
+                    src={getSrc(author.cover_image)}
+                  >
+                    <Avatar />
+                  </div>
+                )}
                 <AuthHeaderContent className="author-header-content">
                   <SiteTitle className="site-title">{author.name}</SiteTitle>
-                  {author.bio && <AuthorBio className="author-bio">{author.bio}</AuthorBio>}
+                  {author.bio && (
+                    <AuthorBio className="author-bio">{author.bio}</AuthorBio>
+                  )}
                   <div css={AuthorMeta} className="author-meta">
                     {author.location && (
                       <div className="author-location" css={[HiddenMobile]}>
@@ -109,8 +123,8 @@ const Author = ({ data, location }) => {
                     )}
                     <div className="author-stats" css={[HiddenMobile]}>
                       {totalCount > 1 && `${totalCount} posts`}
-                      {totalCount === 1 && '1 post'}
-                      {totalCount === 0 && 'No posts'}
+                      {totalCount === 1 && "1 post"}
+                      {totalCount === 0 && "No posts"}
                     </div>
                     {author.website && (
                       <AuthorSocialLink className="author-social-link">
@@ -154,83 +168,41 @@ const Author = ({ data, location }) => {
         <main id="site-main" css={[SiteMain, outer]}>
           <div css={inner}>
             <div css={[PostFeed]}>
-              {edges.map(({ node }) => <PostCard key={node.fields.slug} post={node} />)}
+              {edges.map(({ node }) => (
+                <PostCard key={node.slug} post={node} />
+              ))}
             </div>
           </div>
         </main>
         <Footer />
       </Wrapper>
     </IndexLayout>
-  );
-};
+  )
+}
 
 export const pageQuery = graphql`
-  query ($author: String) {
-    authorYaml(name: { eq: $author }) {
-      name
-      website
-      twitter
-      bio
-      facebook
-      location
-      profile_image {
-        childImageSharp {
-          gatsbyImageData(layout: FULL_WIDTH)
-        }
-      }
-      avatar {
-        childImageSharp {
-          gatsbyImageData(quality: 100, breakpoints: [40, 80, 120], layout: FULL_WIDTH)
-        }
-      }
+  query GhostAuthorQuery($slug: String!) {
+    ghostAuthor(slug: { eq: $slug }) {
+      ...GhostAuthorFields
     }
-    allMarkdownRemark(
-      filter: { frontmatter: { draft: { ne: true } } }
-      sort: { fields: [frontmatter___date], order: DESC }
-      limit: 2000
+    allGhostPost(
+      sort: { order: DESC, fields: [published_at] }
+      filter: { authors: { elemMatch: { slug: { eq: $slug } } } }
     ) {
       edges {
         node {
-          excerpt
-          frontmatter {
-            title
-            excerpt
-            tags
-            date
-            draft
-            image {
-              childImageSharp {
-                gatsbyImageData(layout: FULL_WIDTH)
-              }
-            }
-            author {
-              name
-              bio
-              avatar {
-                childImageSharp {
-                  gatsbyImageData(layout: FULL_WIDTH)
-                }
-              }
-            }
-          }
-          fields {
-            readingTime {
-              text
-            }
-            layout
-            slug
-          }
+          ...GhostPostFields
         }
       }
     }
   }
-`;
+`
 
 const HiddenMobile = css`
   @media (max-width: 500px) {
     display: none;
   }
-`;
+`
 
 const AuthorHeader = css`
   display: flex;
@@ -246,7 +218,7 @@ const AuthorHeader = css`
     /* no image */
     padding-bottom: 10px;
   }
-`;
+`
 
 const AuthorMeta = css`
   z-index: 10;
@@ -263,7 +235,7 @@ const AuthorMeta = css`
   .author-location + .author-stats:before,
   .author-stats + .author-social-link:before,
   .author-social-link + .author-social-link:before {
-    content: '•';
+    content: "•";
     display: inline-block;
     margin: 0 12px;
     color: #fff;
@@ -281,13 +253,13 @@ const AuthorMeta = css`
       display: none;
     }
   }
-`;
+`
 
 const AuthorSocialLink = styled.span`
   display: inline-block;
   margin: 0;
   padding: 6px 0;
-`;
+`
 
 const AuthorBio = styled.h2`
   z-index: 10;
@@ -298,7 +270,7 @@ const AuthorBio = styled.h2`
   line-height: 1.3em;
   font-weight: 400;
   opacity: 0.8;
-`;
+`
 
 const AuthHeaderContent = styled.div`
   display: flex;
@@ -309,7 +281,7 @@ const AuthHeaderContent = styled.div`
     align-items: center;
     margin: 16px 0 0 0;
   }
-`;
+`
 
 // .site-header-content .author-profile-image
 const AuthorProfileBioImage = css`
@@ -320,7 +292,7 @@ const AuthorProfileBioImage = css`
   height: 110px;
   box-shadow: rgba(255, 255, 255, 0.1) 0 0 0 6px;
   border-radius: 100%;
-`;
+`
 
 const AuthorSocialLinkAnchor = styled.a`
   color: #fff;
@@ -329,6 +301,6 @@ const AuthorSocialLinkAnchor = styled.a`
   :hover {
     opacity: 1;
   }
-`;
+`
 
-export default Author;
+export default Author

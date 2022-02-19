@@ -29,7 +29,7 @@ export const PostCard = ({ post, large = false }) => {
         <Link
           className="post-card-image-link"
           css={PostCardImageLink}
-          to={post.slug}
+          to={`/blog/${post.slug}`}
         >
           <PostCardImage className="post-card-image">
             {post?.feature_image && (
@@ -46,7 +46,7 @@ export const PostCard = ({ post, large = false }) => {
         <Link
           className="post-card-content-link"
           css={PostCardContentLink}
-          to={post.slug}
+          to={`/blog/${post.slug}`}
         >
           <PostCardHeader className="post-card-header">
             {post.tags && config.showAllTags && (
