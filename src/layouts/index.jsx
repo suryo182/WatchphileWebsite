@@ -474,7 +474,9 @@ const IndexLayout = props => (
 
           /* globals from screen.css */
           body {
-            background: #fff;
+            // background: #fff;
+            color: rgba(255, 255, 255, 0.75);
+            background: ${colors.darkmode};
           }
 
           @media (prefers-color-scheme: dark) {

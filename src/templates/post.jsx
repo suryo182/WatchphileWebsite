@@ -204,7 +204,8 @@ export const query = graphql`
 const PostTemplate = css`
   .site-main {
     margin-top: 64px;
-    background: #fff;
+    // background: #fff;
+    background: ${colors.darkmode};
     padding-bottom: 4vw;
   }
 
