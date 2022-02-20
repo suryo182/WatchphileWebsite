@@ -167,19 +167,11 @@ export const PostFullContent = styled.section`
   }
 
   .kg-gallery-container .kg-gallery-row > div:nth-of-type(1) {
-    width: 70%;
-    height: 100%;
+    flex: 1.75385 1 0%;
   }
 
   .kg-gallery-container .kg-gallery-row > div:nth-of-type(2) {
-    width: 30%;
-    height: 100%;
-  }
-
-  .kg-gallery-container .kg-gallery-row .kg-gallery-image img {
-    margin: 0;
-    width: 100%;
-    height: 100%;
+    flex: 0.67981 1 0%;
   }
 
   img[src$="#full"] {
