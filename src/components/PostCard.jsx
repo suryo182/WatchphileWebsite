@@ -169,7 +169,8 @@ const PostCardImageLink = css`
 const PostCardImage = styled.div`
   width: auto;
   height: 200px;
-  background: ${colors.lightgrey} no-repeat center center;
+  // background: ${colors.lightgrey} no-repeat center center;
+  background: ${colors.darkmode};
   background-size: cover;
 
   @media (prefers-color-scheme: dark) {
@@ -283,7 +284,8 @@ export const AuthorProfileImage = css`
   width: 100%;
   height: 100%;
   /* background: color(var(--lightgrey) l(+10%)); */
-  background: ${lighten("0.1", colors.lightgrey)};
+  // background: ${lighten("0.1", colors.lightgrey)};
+  background: ${colors.darkmode};
   border-radius: 100%;
   object-fit: cover;
 

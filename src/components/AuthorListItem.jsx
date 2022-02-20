@@ -218,6 +218,15 @@ const AuthorCardStyles = css`
     display: none;
   }
 
+  /* background: color(var(--darkmode) l(+4%)); */
+  background: ${lighten("0.04", colors.darkmode)};
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.4);
+
+  :before {
+    /* border-top-color: color(var(--darkmode) l(+4%)); */
+    border-top-color: ${lighten("0.04", colors.darkmode)};
+  }
+
   @media (prefers-color-scheme: dark) {
     /* background: color(var(--darkmode) l(+4%)); */
     background: ${lighten("0.04", colors.darkmode)};

@@ -340,6 +340,17 @@ const PostFullByline = styled.div`
     opacity: 0.6;
   }
 
+  /* border-top-color: color(var(--darkmode) l(+15%)); */
+  border-top-color: ${lighten("0.15", colors.darkmode)};
+
+  .post-full-byline-meta h4 a {
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .post-full-byline-meta h4 a:hover {
+    color: #fff;
+  }
+
   @media (prefers-color-scheme: dark) {
     /* border-top-color: color(var(--darkmode) l(+15%)); */
     border-top-color: ${lighten("0.15", colors.darkmode)};

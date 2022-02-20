@@ -483,6 +483,93 @@ export const PostFullContent = styled.section`
     border: ${lighten("-0.01", colors.whitegrey)} 1px solid;
   }
 
+  /* light */
+
+  /* background: var(--darkmode); */
+  background: ${colors.darkmode};
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h6 {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  a {
+    color: #fff;
+    box-shadow: inset 0 -1px 0 #fff;
+  }
+
+  strong {
+    color: #fff;
+  }
+
+  em {
+    color: #fff;
+  }
+
+  code {
+    color: #fff;
+    background: #000;
+  }
+
+  hr {
+    /* border-top-color: color(var(--darkmode) l(+8%)); */
+    /* border-top-color: ${lighten("0.08", colors.darkmode)}; */
+    border-top-color: #17191c;
+  }
+
+  hr:after {
+    background: #17191c;
+    box-shadow: ${colors.darkmode} 0 0 0 5px;
+  }
+
+  figcaption {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  table td:first-of-type {
+    /* background-image: linear-gradient(
+        to right,
+        var(--darkmode) 50%,
+        color(var(--darkmode) a(0%)) 100%
+      ); */
+    background-image: linear-gradient(
+      to right,
+      ${colors.darkmode} 50%,
+      ${colors.darkmode} 100%
+    );
+  }
+
+  table td:last-child {
+    /* background-image: linear-gradient(
+        to left,
+        var(--darkmode) 50%,
+        color(var(--darkmode) a(0%)) 100%
+      ); */
+    background-image: linear-gradient(270deg, #191b1f 50%, rgba(25, 27, 31, 0));
+  }
+
+  table th {
+    color: rgba(255, 255, 255, 0.85);
+    /* background-color: color(var(--darkmode) l(+8%)); */
+    background-color: ${lighten("0.08", colors.darkmode)};
+  }
+
+  table th,
+  table td {
+    /* border: color(var(--darkmode) l(+8%)) 1px solid; */
+    border: ${lighten("0.08", colors.darkmode)} 1px solid;
+  }
+
+  .kg-bookmark-container,
+  .kg-bookmark-container:hover {
+    color: rgba(255, 255, 255, 0.75);
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.9);
+  }
+
+  /* dark */
   @media (prefers-color-scheme: dark) {
     /* background: var(--darkmode); */
     background: ${colors.darkmode};
