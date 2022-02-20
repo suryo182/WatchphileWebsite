@@ -143,6 +143,8 @@ const SubscribeFormButton = styled.button`
     width: 100%;
   }
 
+  opacity: 0.9;
+
   @media (prefers-color-scheme: dark) {
     opacity: 0.9;
   }

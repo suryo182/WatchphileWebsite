@@ -248,6 +248,7 @@ const AuthorAvatar = css`
   border: #fff 2px solid;
   border-radius: 100%;
   transition: all 0.5s cubic-bezier(0.4, 0.01, 0.165, 0.99) 700ms;
+  border-color: ${lighten("0.02", colors.darkgrey)};
 
   @media (max-width: 500px) {
     width: 36px;

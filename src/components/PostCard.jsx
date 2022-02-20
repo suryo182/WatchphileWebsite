@@ -209,6 +209,7 @@ const PostCardTitle = styled.h2`
   margin: 0 0 0.4em;
   line-height: 1.15em;
   transition: color 0.2s ease-in-out;
+  color: rgba(255, 255, 255, 0.85);
 
   @media (prefers-color-scheme: dark) {
     color: rgba(255, 255, 255, 0.85);
@@ -217,6 +218,7 @@ const PostCardTitle = styled.h2`
 
 const PostCardExcerpt = styled.section`
   font-family: Georgia, serif;
+  color: ${lighten("0.1", colors.midgrey)} !important;
 
   @media (prefers-color-scheme: dark) {
     /* color: color(var(--midgrey) l(+10%)); */
@@ -249,7 +251,8 @@ const PostCardBylineContent = styled.div`
 
   a {
     /* color: color(var(--darkgrey) l(+20%)); */
-    color: ${lighten("0.2", colors.darkgrey)};
+    // color: ${lighten("0.2", colors.darkgrey)};
+    color: rgba(255, 255, 255, 0.75);
     font-weight: 600;
   }
 
@@ -272,6 +275,7 @@ export const StaticAvatar = css`
   height: 34px;
   border: #fff 2px solid;
   border-radius: 100%;
+  border-color: ${lighten("0.02", colors.darkgrey)};
 
   @media (prefers-color-scheme: dark) {
     /* border-color: color(var(--darkgrey) l(+2%)); */

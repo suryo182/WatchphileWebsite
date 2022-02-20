@@ -1,43 +1,41 @@
-import React from 'react';
-import styled from '@emotion/styled';
+import React from "react"
+import styled from "@emotion/styled"
 
-import { colors } from '../../styles/colors';
-import config from '../../utils/siteConfig';
-import { SubscribeForm } from './SubscribeForm';
-import SubscribeLogo from './SubscribeLogo';
-
-
+import { colors } from "../../styles/colors"
+import config from "../../utils/siteConfig"
+import { SubscribeForm } from "./SubscribeForm"
+import SubscribeLogo from "./SubscribeLogo"
 
 export class SubscribeModal extends React.Component {
-  state = { isOpen: false };
+  state = { isOpen: false }
 
   componentWillUnmount() {
-    this.unsubscribeEsc();
+    this.unsubscribeEsc()
   }
 
-  escFunction = (event) => {
-    if (event.key === 'Escape') {
-      this.close();
+  escFunction = event => {
+    if (event.key === "Escape") {
+      this.close()
     }
-  };
+  }
 
   subscribeEsc() {
-    document.addEventListener('keydown', this.escFunction, false);
+    document.addEventListener("keydown", this.escFunction, false)
   }
 
   unsubscribeEsc() {
-    document.removeEventListener('keydown', this.escFunction, false);
+    document.removeEventListener("keydown", this.escFunction, false)
   }
 
   open = () => {
-    this.setState({ isOpen: true });
-    this.subscribeEsc();
-  };
+    this.setState({ isOpen: true })
+    this.subscribeEsc()
+  }
 
   close = () => {
-    this.setState({ isOpen: false });
-    this.unsubscribeEsc();
-  };
+    this.setState({ isOpen: false })
+    this.unsubscribeEsc()
+  }
 
   render() {
     return (
@@ -45,15 +43,17 @@ export class SubscribeModal extends React.Component {
         <SubscribeOverlayClose onClick={this.close} />
         <SubscribeOverlayContent>
           <SubscribeLogo />
-          <SubscribeOverlayTitle>Subscribe to {config.title}</SubscribeOverlayTitle>
+          <SubscribeOverlayTitle>
+            Subscribe to {config.title}
+          </SubscribeOverlayTitle>
           <SubscribeOverlayDescription>
-            Stay up to date! Get all the latest &amp; greatest posts delivered straight to your
-            inbox
+            Stay up to date! Get all the latest &amp; greatest posts delivered
+            straight to your inbox
           </SubscribeOverlayDescription>
           <SubscribeForm />
         </SubscribeOverlayContent>
       </SubscribeOverlay>
-    );
+    )
   }
 }
 
@@ -69,10 +69,10 @@ const SubscribeOverlay = styled.div`
   align-items: center;
   background: rgba(9, 10, 11, 0.97);
   /* opacity: 0; */
-  opacity: ${(props) => (props.open ? 1 : 0)};
+  opacity: ${props => (props.open ? 1 : 0)};
   transition: opacity 0.2s ease-in;
   /* pointer-events: none; */
-  pointer-events: ${(props) => (props.open ? 'auto' : 'none')};
+  pointer-events: ${props => (props.open ? "auto" : "none")};
 
   button {
     display: inline-block;
@@ -131,12 +131,17 @@ const SubscribeOverlay = styled.div`
       margin: 12px 0 0;
     }
   }
+
+  p {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
   @media (prefers-color-scheme: dark) {
     p {
       color: rgba(255, 255, 255, 0.7);
     }
   }
-`;
+`
 
 const SubscribeOverlayClose = styled.a`
   position: absolute;
@@ -148,7 +153,7 @@ const SubscribeOverlayClose = styled.a`
   height: 40px;
 
   :before {
-    content: '';
+    content: "";
     position: absolute;
     top: 20px;
     right: 4px;
@@ -161,7 +166,7 @@ const SubscribeOverlayClose = styled.a`
   }
 
   :after {
-    content: '';
+    content: "";
     position: absolute;
     top: 20px;
     right: 4px;
@@ -176,7 +181,7 @@ const SubscribeOverlayClose = styled.a`
   :hover {
     cursor: default;
   }
-`;
+`
 
 const SubscribeOverlayContent = styled.div`
   position: relative;
@@ -184,14 +189,14 @@ const SubscribeOverlayContent = styled.div`
   padding: 4vw;
   color: #fff;
   text-align: center;
-`;
+`
 
 const SubscribeOverlayTitle = styled.h1`
   display: inline-block;
   margin: 0 0 10px 0;
   font-size: 5.2rem;
   line-height: 1.15em;
-`;
+`
 
 const SubscribeOverlayDescription = styled.p`
   margin: 0 auto 50px;
@@ -202,4 +207,4 @@ const SubscribeOverlayDescription = styled.p`
   line-height: 1.3em;
   font-weight: 300;
   opacity: 0.8;
-`;
+`

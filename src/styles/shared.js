@@ -154,6 +154,10 @@ export const SiteHeaderStyles = css`
     background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
   }
 
+  :before {
+    background: rgba(0, 0, 0, 0.6);
+  }
+
   @media (prefers-color-scheme: dark) {
     :before {
       background: rgba(0, 0, 0, 0.6);
@@ -227,6 +231,10 @@ export const ResponsiveHeaderBackground = styled.div`
       display: block;
       height: 140px;
       background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+    }
+
+    &:before {
+      background: rgba(0, 0, 0, 0.6);
     }
 
     @media (prefers-color-scheme: dark) {

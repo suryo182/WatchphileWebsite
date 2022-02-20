@@ -271,7 +271,8 @@ const PostFullTags = styled.section`
 
 const PostFullCustomExcerpt = styled.p`
   margin: 20px 0 0;
-  color: var(--midgrey);
+  // color: var(--midgrey);
+  color: ${lighten("0.1", colors.midgrey)};
   font-family: Georgia, serif;
   font-size: 2.3rem;
   line-height: 1.4em;
@@ -368,11 +369,13 @@ const PostFullByline = styled.div`
 // eslint-disable-next-line
 export const PostFullTitle = styled.h1`
   margin: 0 0 0.2em;
-  color: ${setLightness("0.05", colors.darkgrey)};
+  // color: ${setLightness("0.05", colors.darkgrey)};
   @media (max-width: 500px) {
     margin-top: 0.2em;
     font-size: 3.3rem;
   }
+
+  color: rgba(255, 255, 255, 0.9);
 
   @media (prefers-color-scheme: dark) {
     color: rgba(255, 255, 255, 0.9);
