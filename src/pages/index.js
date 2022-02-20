@@ -1,6 +1,5 @@
 import React from "react"
 import {getDbModuleAndDb} from "../utils/firebase"
-import "../styles/site.css"
 import { Helmet } from "react-helmet"
 
 import think_icon from "../images/think_icon.png"

@@ -72,7 +72,7 @@ export const PostFeed = css`
   flex-wrap: wrap;
   margin: 0 -20px;
   padding: 50px 0 0;
-  background: #fff;
+  background: ${colors.darkmode};
 
   /* Special Template Styles */
   padding: 40px 0 5vw;
