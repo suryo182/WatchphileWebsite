@@ -109,14 +109,77 @@ export const PostFullContent = styled.section`
   video {
     display: block;
     margin: 1.5em auto;
-    max-width: 1040px;
+    max-width: 100%;
     height: auto;
   }
+
   @media (max-width: 1040px) {
     img,
     video {
       width: 100%;
     }
+  }
+
+  .kg-product-card-container {
+    margin: 1.5rem auto;
+    max-width: 510px;
+    height: auto;
+    padding: 20px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+  }
+
+  .kg-product-card-container img {
+    margin: 0;
+  }
+
+  .kg-product-card-container p {
+    padding: 0;
+    margin: 0;
+    font-size: 1.7rem;
+    line-height: 1.6em;
+  }
+
+  .kg-product-card-rating {
+    display: flex;
+    margin-bottom: 1.5rem;
+  }
+
+  .kg-product-card-rating-star svg {
+    height: 24px;
+    width: 24px;
+    fill: #35373a;
+  }
+
+  .kg-product-card-rating-active svg {
+    fill: #e1e1e2;
+  }
+
+  .kg-gallery-container {
+    margin: 3.5rem 0;
+  }
+
+  .kg-gallery-container .kg-gallery-row {
+    display: flex;
+    column-gap: 24px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .kg-gallery-container .kg-gallery-row > div:nth-of-type(1) {
+    width: 70%;
+    height: 100%;
+  }
+
+  .kg-gallery-container .kg-gallery-row > div:nth-of-type(2) {
+    width: 30%;
+    height: 100%;
+  }
+
+  .kg-gallery-container .kg-gallery-row .kg-gallery-image img {
+    margin: 0;
+    width: 100%;
+    height: 100%;
   }
 
   img[src$="#full"] {

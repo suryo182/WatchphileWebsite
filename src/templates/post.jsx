@@ -29,7 +29,6 @@ const PageTemplate = ({ data, pageContext, location }) => {
   // 20 AUG 2018
   const displayDatetime = format(date, "dd LLL yyyy")
 
-
   return (
     <IndexLayout className="post-template">
       <Helmet>
@@ -161,7 +160,7 @@ const PageTemplate = ({ data, pageContext, location }) => {
                 <PostFullImage>
                   <img
                     src={post.feature_image}
-                    style={{ height: "100%" }}
+                    style={{ height: "100%", width: "100%" }}
                     alt={post.title}
                   />
                 </PostFullImage>
@@ -192,9 +191,7 @@ export const query = graphql`
     ghostPost(slug: { eq: $slug }) {
       ...GhostPostFields
     }
-    allGhostPost(
-      sort: { order: DESC, fields: [published_at] }
-    ) {
+    allGhostPost(sort: { order: DESC, fields: [published_at] }) {
       edges {
         node {
           ...GhostPostFields
@@ -223,7 +220,7 @@ const PostTemplate = css`
 export const PostFull = css`
   position: relative;
   z-index: 50;
-` 
+`
 
 // eslint-disable-next-line
 export const NoImage = css`
@@ -235,7 +232,7 @@ export const NoImage = css`
   .post-full-content:after {
     display: none;
   }
-` 
+`
 
 // eslint-disable-next-line
 export const PostFullHeader = styled.header`
@@ -257,7 +254,7 @@ export const PostFullHeader = styled.header`
   @media (max-width: 500px) {
     padding: 20px 0 35px;
   }
-` 
+`
 
 const PostFullTags = styled.section`
   display: flex;
@@ -372,26 +369,11 @@ export const PostFullTitle = styled.h1`
 
 const PostFullImage = styled.figure`
   margin: 25px 0 50px;
-  height: 800px;
+  height: auto;
+  width: 100%;
   background: ${colors.lightgrey} center center;
   background-size: cover;
   border-radius: 5px;
-
-  @media (max-width: 1170px) {
-    margin: 25px -6vw 50px;
-    border-radius: 0;
-    img {
-      max-width: 1170px;
-    }
-  }
-
-  @media (max-width: 800px) {
-    height: 400px;
-  }
-  @media (max-width: 500px) {
-    margin-bottom: 4vw;
-    height: 350px;
-  }
 `
 
 export default PageTemplate
